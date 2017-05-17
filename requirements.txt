@@ -1,0 +1,5 @@
+django==1.10.0
+markdown==2.6.8
+pygments==2.2.0
+pytz==2012d
+MySQLdb==1.2.5
