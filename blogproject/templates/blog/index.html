@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+	{% block header %}
+    <header class="intro-header" style="background-image: url({% static 'blog/img/home-bg.jpg' %})">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <div class="site-heading">
+                        <h1>只因有赵</h1>
+                        <hr class="small">
+                        <span class="subheading">人生苦短，我用Python！</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+	{% endblock header %}
+
+    {% block content %}
+    {% for article in article_list%}
+    <div class="post-preview">
+        <a href="{{ article.get_absolute_url }}">
+            <h2 class="post-title">
+                {{ article.title }}
+            </h2>
+		</a>
+			<div class="entry-meta">
+				<span class="post-category">{{ article.category.name }} &#8226</span>
+				
+				<span class="post-date">{{ article.created_time|date:"Y-m-d H:i:s" }} &#8226</span>
+				
+				<span class="post-author">{{ article.author }}</span>
+			</div>
+        
+		<div class="entry-content clearfix">
+			<p>{{ article.abstract }}</p>
+				<div class="read-more cl-effect-14">
+					<a href="{{ article.get_absolute_url }}" class="more-link">继续阅读<span class="meta-nav">→</span></a>
+				</div>
+		</div>
+    </div>
+    <hr>
+	{% empty %}
+	<div class="no-post">暂时还没有发布的文章！</div>
+	{% endfor %}
+	<div style="text-align:center;">
+	<div class="pagination",style="width:400px;margin:0 auto;">
+  {% if article_list.has_previous %}
+    <!-- 如果当前页还有上一页，显示一个上一页的按钮 -->
+    <a href="?page={{ article_list.previous_page_number }}">上一页</a>
+  {% endif %}
+  <span class="current">
+    <!-- 显示当前页面信息 -->
+    第 {{ article_list.number }} 页 / 共 {{ article_list.paginator.num_pages }} 页
+  </span>
+  {% if article_list.has_next %}
+    <!-- 如果当前页还有上下页，显示一个下一页的按钮 -->
+    <a href="?page={{ article_list.next_page_number }}">下一页</a>
+	<span class="current">
+  {% endif %}
+	</div>
+</div>
+	{% endblock content %}
